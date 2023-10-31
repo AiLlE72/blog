@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto mt-5">
+            <h1>Ajouter une categorie</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mx-auto mt-3">
+            <form action="/categories" method="post" enctype="application/x-www-form-urlencoded">
+                <div class="input-group mb-3">
+                    <input name="name" type="text" class="form-control" placeholder="Entrer une nouvelle categories"
+                        aria-label="Recipient's category" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6 mx-auto mt-3">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each categories}}
+                        <tr>
+                        <th scope="row">{{this._id}}</th>
+                        <td>{{this.name}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {{/each}}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
