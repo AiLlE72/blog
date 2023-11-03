@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const categoryModel = require('./categoryModel.js')
 
 const ArticleModel = new mongoose.Schema({
     title: {
@@ -9,10 +10,8 @@ const ArticleModel = new mongoose.Schema({
         type: String,
         required: true
     },
-    category: {
-        type: String,
-        required: true
-    },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: categoryModel },
+        
     content: {
         type: String,
         required: true

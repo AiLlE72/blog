@@ -6,13 +6,21 @@
     </div>
     <div class="row">
         <div class="col-md-6 mx-auto mt-3">
-            <form action="/categories" method="post" enctype="application/x-www-form-urlencoded">
-                <div class="input-group mb-3">
-                    <input name="name" type="text" class="form-control" placeholder="Entrer une nouvelle categories"
-                        aria-label="Recipient's category" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Enregistrer</button>
-                </div>
-            </form>
+            {{#if category}}
+            <form action="/categories/modifier/{{category._id}}" method="post"
+                enctype="application/x-www-form-urlencoded">
+
+                {{else}}
+                <form action="/categories" method="post" enctype="application/x-www-form-urlencoded">
+
+                    {{/if}}
+                    <div class="input-group mb-3">
+                        <input name="name" type="text" class="form-control" placeholder="Entrer une nouvelle categories"
+                            aria-label="Recipient's category" aria-describedby="button-addon2" {{#if category}}
+                            value="{{category.name}}" {{/if}}>
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Enregistrer</button>
+                    </div>
+                </form>
         </div>
 
     </div>
@@ -30,14 +38,40 @@
                 </thead>
                 <tbody>
                     {{#each categories}}
-                        <tr>
+                    <tr>
                         <th scope="row">{{this._id}}</th>
                         <td>{{this.name}}</td>
-                        <td></td>
-                        <td></td>
+                        <td><button data-bs-toggle="modal" data-bs-target="#Modal{{this._id}}">
+                                <i class="bi bi-trash"></i>
+                            </button></td>
+                        <td><button><a href="/categories/modifier/{{this._id}}"><i
+                                        class="bi bi-pencil-square"></i></a></button></td>
                     </tr>
+                    <!-- Modal -->
+                    <div class="modal fade" id="Modal{{this._id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="/categories/effacer/{{this._id}}" method="post"
+                                    enctype="application/x-www-form-urlencoded">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{this.name}}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     {{/each}}
-                    
                 </tbody>
             </table>
         </div>

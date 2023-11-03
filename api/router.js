@@ -26,7 +26,8 @@ router.route('/effacer-article/:_id')
     .post(articleController.delete)
 
 router.route('/article-modification/:_id')
-    .get(articleController)
+    .get(articleController.getUpdate)
+    .post(articleController.postUpdate)
 
 router.route('/categories')
     .get(categorycontroller.get)
@@ -36,6 +37,7 @@ router.route('/categories/effacer/:_id')
     .post(categorycontroller.delete)
 
 router.route('/categories/modifier/:_id')
-    .post(categorycontroller.update)
+    .get(categorycontroller.getUpdate)
+    .post(categorycontroller.postUpdate)
 
 module.exports = router

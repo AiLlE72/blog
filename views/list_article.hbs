@@ -12,7 +12,7 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapse{{_id}}" aria-expanded="false" aria-controls="collapse{{_id}}">
-                            {{title}} ecrit par : {{author}}, le {{moment createdAt "DD/MM/YY"}}
+                            {{title}} ecrit par : {{author}}, le {{moment createdAt "DD/MM/YY"}} <span class="badge bg-secondary mx-1">{{this.category.name}}</span>
                         </button>
                     </h2>
                     <div id="collapse{{_id}}" class="accordion-collapse collapse " data-bs-parent="#accordionExample">

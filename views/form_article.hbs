@@ -1,36 +1,49 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto mb-5">
+            {{#if article}}
+            <h1>Modifier un article</h1>
+            {{else}}
             <h1>Ecrire un nouvel article</h1>
+            {{/if}}
         </div>
     </div>
     <div class="row">
         <div class="col-md-8 mx-auto">
-            <form action="/formulaire-article" method="post" enctype="application/x-www-form-urlencoded">
-                <div class="mb-3">
-                    <label for="title" class="form-label">Titre</label>
-                    <input name="title" type="text" class="form-control" id="title">
-                </div>
-                <div class="mb-3">
-                    <select name="category" class="form-select" aria-label="Default select example">
-                        <option selected>Choisissez une catégorie</option>
-                        <option value="Article">Article</option>
-                        <option value="Comparaison">Comparaison</option>
-                        <option value="Essai">Essai</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="author" class="form-label">Auteur</label>
-                    <input name="author" type="text" class="form-control" id="author" minlength="5" maxlength="25">
-                </div>
-                <div class="mb-4">
-                    <label for="article" class="form-label">Taper votre article ici </label>
-                    <textarea name="content" class="form-control" id="article" rows="6"></textarea>
-                </div>
-                <div class="mb-3 d-grid gap-2">
-                    <button class="btn btn-outline-success" type="submit">Enregistrer</button>
-                </div>
-            </form>
+            {{#if article}}
+            <form action="/article-modification/{{article._id}}" method="post" enctype="application/x-www-form-urlencoded">
+                {{else}}
+                <form action="/formulaire-article" method="post" enctype="application/x-www-form-urlencoded">
+                    {{/if}}
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Titre</label>
+                        <input name="title" type="text" class="form-control" id="title"{{#if article}} value="{{article.title}}"{{/if}}>
+                    </div>
+                    <div class="mb-3">
+                        <select name="category" class="form-select" aria-label="Default select example">
+                            {{#if article}}
+                                <option value="{{article.category._id}}" selected>{{article.category.name}}</option>
+                            {{else}}
+                              <option selected>Choisissez une catégorie</option>  
+                            {{/if}}
+                            {{#each categories }}
+                               <option value="{{this._id}}">{{this.name}}</option> 
+                            {{/each}}
+                            
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Auteur</label>
+                        <input name="author" type="text" class="form-control" id="author" minlength="5" maxlength="25" {{#if article}} value="{{article.author}}"{{/if}}>
+                    </div>
+                    <div class="mb-4">
+                        <label for="article" class="form-label">Taper votre article ici </label>
+                        <textarea name="content" class="form-control" id="article" rows="6"> {{#if article}} {{article.content}}{{/if}}</textarea>
+                    </div>
+                    <div class="mb-3 d-grid gap-2">
+                        <button class="btn btn-outline-success" type="submit">Enregistrer</button>
+                    </div>
+                </form>
         </div>
     </div>
 </div>
