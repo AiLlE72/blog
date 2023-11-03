@@ -6,6 +6,15 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            {{#if errors}}
+            {{#each errors }}
+            <div class="alert alert-danger" role="alert">
+                {{this.msg}}
+            </div>
+            {{/each}}
+
+            {{/if}}
+
             <form action="/contact" method="post" enctype="application/x-www-form-urlencoded">
 
                 <label for="Email" class="form-label mt-3">Adresse Email</label>

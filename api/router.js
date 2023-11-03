@@ -1,4 +1,5 @@
 const express = require('express')
+const { query } = require('express-validator');
 
 const router = express.Router()
 
@@ -13,7 +14,10 @@ router.route('/')
 
 router.route('/contact')
     .get(contactController.get)
-    .post(contactController.post)
+    .post([query("email").notEmpty().withMessage("votre formulaire est vide")
+        .isEmail().withMessage("votre formulaire n'est pas un email"),
+        query('content').isEmpty().withMessage("votre contenu est vide")],
+        contactController.post)
 
 router.route('/formulaire-article')
     .get(articleController.getForm)
