@@ -15,6 +15,7 @@
                 {{else}}
                 <form action="/formulaire-article" method="post" enctype="application/x-www-form-urlencoded">
                     {{/if}}
+                    <input name="csrf" type="hidden" value="{{csrf}}">
                     <div class="mb-3">
                         <label for="title" class="form-label">Titre</label>
                         <input name="title" type="text" class="form-control" id="title"{{#if article}} value="{{article.title}}"{{/if}}>

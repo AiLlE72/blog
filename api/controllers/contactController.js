@@ -1,4 +1,4 @@
-const { query, validationResult } = require('express-validator')
+const {  validationResult } = require('express-validator')
 const contactModel = require('../models/contactModel')
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
             return res.status(422).render('contact', {errors : result.errors})
         }
 
-
+        console.log(req.body);
         contactModel.create({
             email: req.body.email,
             content: req.body.content

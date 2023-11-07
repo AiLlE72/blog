@@ -7,18 +7,25 @@ module.exports = {
         res.render('form_article', { categories })
     },
     postForm: async (req, res) => {
-        const category = await categoryModel.findById(req.body.category)
-        await articleModel.create({
-            title: req.body.title,
-            author: req.body.author,
-            category: category._id,
-            content: req.body.content
-        })
-        res.redirect('/liste-articles')
+            console.log(req.body);
+            console.log(req.session);
+        if (req.session.csrf !== req.body.csrf) {
+            res.redirect('/formulaire-article')
+        } else {
+            const category = await categoryModel.findById(req.body.category)
+            await articleModel.create({
+                title: req.body.title,
+                author: req.body.author,
+                category: category._id,
+                content: req.body.content
+            })
+            res.redirect('/liste-articles') 
+        }
+        
     },
     getList: async (req, res) => {
-        const articles = await articleModel.find({}).lean().populate('category').exec()
-        console.log(articles);
+        const articles = await articleModel.find().lean().populate('category').exec()
+        
         res.render('list_article', { articles })
     },
     delete: async (req, res) => {

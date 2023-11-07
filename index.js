@@ -2,6 +2,10 @@ const express = require('express')
 const { engine } = require('express-handlebars')
 var Handlebars = require("handlebars");
 var MomentHandler = require("handlebars.moment");
+const helmet = require('helmet')
+const crypto = require('crypto')
+const session = require('express-session')
+
 
 const mongoose = require('mongoose');
 
@@ -17,6 +21,42 @@ const port = 5000
 
 app.engine('hbs', engine({ extname: 'hbs' }))
 app.set('view engine', 'hbs')
+
+app.use(
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                "script-src": ["'self'", "cdn.jsdelivr.net"],
+            },
+        },
+    })
+);
+
+//csrf
+function generateCsrfToken() {
+    return crypto.randomBytes(16).toString('hex')
+}
+app.use(session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true,
+    
+    
+  }))
+
+app.use((req, res, next)=>{
+    if (!req.session.userId) {
+        next()
+    }else{
+        if (!req.session.csrf) {
+            req.session.csrf = generateCsrfToken() 
+        }
+        res.locals.csrf = req.session.csrf  
+        next()
+    }
+    
+})
+
 
 app.use(express.urlencoded({ extended: true }))
 

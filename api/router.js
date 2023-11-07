@@ -1,22 +1,24 @@
 const express = require('express')
-const { query } = require('express-validator');
+const {  check } = require('express-validator');
 
 const router = express.Router()
 
 const homeController = require('./controllers/homeController')
 const contactController = require('./controllers/contactController')
 const articleController = require('./controllers/articleController')
-const categorycontroller = require('./controllers/categorycontroller')
+const categorycontroller = require('./controllers/categorycontroller');
+const userController = require('./controllers/userController');
 
+const log = require('./middlewares/test')
 
 router.route('/')
     .get(homeController.get)
 
 router.route('/contact')
     .get(contactController.get)
-    .post([query("email").notEmpty().withMessage("votre formulaire est vide")
+    .post([check("email").notEmpty().withMessage("votre formulaire est vide")
         .isEmail().withMessage("votre formulaire n'est pas un email"),
-        query('content').isEmpty().withMessage("votre contenu est vide")],
+        check('content').notEmpty().withMessage("votre contenu est vide").escape()],
         contactController.post)
 
 router.route('/formulaire-article')
@@ -41,7 +43,19 @@ router.route('/categories/effacer/:_id')
     .post(categorycontroller.delete)
 
 router.route('/categories/modifier/:_id')
-    .get(categorycontroller.getUpdate)
+    .get( categorycontroller.getUpdate)
     .post(categorycontroller.postUpdate)
+
+router.route('/inscription')
+    .get( userController.get)
+    .post(userController.post)
+
+router.route('/connexion')
+    .get( userController.getConnect)
+    .post(userController.postConnect)
+
+router.route('/deconnexion')
+    .post(userController.deco)
+    
 
 module.exports = router

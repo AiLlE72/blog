@@ -16,7 +16,7 @@
             {{/if}}
 
             <form action="/contact" method="post" enctype="application/x-www-form-urlencoded">
-
+                <input name="csrftoken" type="hidden" value="{{csrf}}">
                 <label for="Email" class="form-label mt-3">Adresse Email</label>
                 <input name="email" type="email" class="form-control" id="Email" placeholder="name@example.com">
 
