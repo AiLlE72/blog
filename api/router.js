@@ -17,7 +17,7 @@ router.route('/')
 router.route('/contact')
     .get(contactController.get)
     .post([check("email").notEmpty().withMessage("votre formulaire est vide")
-        .isEmail().withMessage("votre formulaire n'est pas un email"),
+        .isEmail().withMessage('votre formulaire n\'est pas un email').escape(),
         check('content').notEmpty().withMessage("votre contenu est vide").escape()],
         contactController.post)
 

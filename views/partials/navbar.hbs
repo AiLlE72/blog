@@ -13,17 +13,21 @@
         <li class="nav-item">
           <a class="nav-link" href="/contact">Contact</a>
         </li>
+        {{#unless email}}
         <li class="nav-item">
           <a class="nav-link" href="/inscription">Inscription</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/connexion">Connexion</a>
         </li>
+        {{/unless}}
+        {{#if email}}
         <li class="nav-item">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
+          <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Déconnexion
           </button>
         </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administration
@@ -41,6 +45,7 @@
             <li><a class="dropdown-item" href="/Liste-contacts">liste des contacts</a></li>
           </ul>
         </li>
+        {{/if}}
         <li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
         </li>

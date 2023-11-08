@@ -32,18 +32,17 @@ app.use(
     })
 );
 
-//csrf
-function generateCsrfToken() {
-    return crypto.randomBytes(16).toString('hex')
-}
+
 app.use(session({
     secret: 'keyboard cat',
     resave: true,
     saveUninitialized: true,
-    
-    
   }))
 
+//csrf
+function generateCsrfToken() {
+    return crypto.randomBytes(16).toString('hex')
+}
 app.use((req, res, next)=>{
     if (!req.session.userId) {
         next()
@@ -51,7 +50,8 @@ app.use((req, res, next)=>{
         if (!req.session.csrf) {
             req.session.csrf = generateCsrfToken() 
         }
-        res.locals.csrf = req.session.csrf  
+        res.locals.csrf = req.session.csrf
+        res.locals.email = req.session.email  
         next()
     }
     

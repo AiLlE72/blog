@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 configDB.js
 /node_modules
-=======
 # Logs
 logs
 *.log
@@ -132,4 +130,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
->>>>>>> 7c2a6773aa47b19badad0d231096fae33966f986
