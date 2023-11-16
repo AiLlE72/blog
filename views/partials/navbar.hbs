@@ -8,17 +8,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link {{#if active.home}}active{{/if}}" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/contact">Contact</a>
+          <a class="nav-link {{#if active.contact}}active{{/if}}" href="/contact">Contact</a>
         </li>
         {{#unless email}}
         <li class="nav-item">
-          <a class="nav-link" href="/inscription">Inscription</a>
+          <a class="nav-link {{#if active.register}}active{{/if}}" href="/inscription">Inscription</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/connexion">Connexion</a>
+          <a class="nav-link {{#if active.connexion}}active{{/if}}" href="/connexion">Connexion</a>
         </li>
         {{/unless}}
         {{#if email}}
@@ -28,8 +28,8 @@
           </button>
         </li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle{{#if active.administration}}active{{/if}}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administration
           </a>
           <ul class="dropdown-menu">
@@ -46,9 +46,9 @@
           </ul>
         </li>
         {{/if}}
-        <li class="nav-item">
+        {{!-- <li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
+        </li> --}}
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -66,16 +66,18 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Déconnexion</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Etes vous sur de déjà vouloir nous quitter
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non, je reste</button>
         <form action="/deconnexion" method="post" enctype="application/x-www-form-urlencoded">
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <input name="csrftoken" type="hidden" value="{{csrf}}">
+
+          <button type="submit" class="btn btn-primary">Je me déconnecte</button>
         </form>
 
       </div>

@@ -3,7 +3,7 @@ const contactModel = require('../models/contactModel')
 
 module.exports = {
     get: (req, res) => {
-        res.render('contact')
+        res.render('contact',  {active: {contact: true}})
     },
     post: (req, res) => {
         if (req.session.csrf !== req.body.csrf) {
@@ -18,7 +18,6 @@ module.exports = {
             return res.status(422).render('contact', { errors: result.errors })
         }
 
-        console.log(req.body);
         contactModel.create({
             email: req.body.email,
             content: req.body.content

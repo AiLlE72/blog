@@ -15,6 +15,8 @@
 
                     {{/if}}
                     <div class="input-group mb-3">
+                        <input name="csrftoken" type="hidden" value="{{csrf}}">
+
                         <input name="name" type="text" class="form-control" placeholder="Entrer une nouvelle categories"
                             aria-label="Recipient's category" aria-describedby="button-addon2" {{#if category}}
                             value="{{category.name}}" {{/if}}>
@@ -25,7 +27,7 @@
 
     </div>
     <div class="row">
-        <div class="col-md-6 mx-auto mt-3">
+        <div class="col-md-6 mx-auto mt-4">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -54,6 +56,8 @@
                             <div class="modal-content">
                                 <form action="/categories/effacer/{{this._id}}" method="post"
                                     enctype="application/x-www-form-urlencoded">
+                                    <input name="csrftoken" type="hidden" value="{{csrf}}">
+
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"

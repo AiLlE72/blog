@@ -12,7 +12,8 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapse{{_id}}" aria-expanded="false" aria-controls="collapse{{_id}}">
-                            {{title}} ecrit par : {{author}}, le {{moment createdAt "DD/MM/YY"}} <span class="badge bg-secondary mx-1">{{this.category.name}}</span>
+                            {{title}} ecrit par : {{author}}, le {{moment createdAt "DD/MM/YY"}} <span
+                                class="badge bg-secondary mx-1">{{this.category.name}}</span>
                         </button>
                     </h2>
                     <div id="collapse{{_id}}" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
@@ -20,7 +21,10 @@
                             {{content}}
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2 me-2">
-                            <a href="/article-modification/{{_id}}"><button class="btn btn-secondary me-md-2" type="button">Modifier</button></a>
+                            <a href="/article/{{_id}}"><button class="btn btn-outline-info me-md-2" type="button">Lire
+                                    l'aricle</button></a>
+                            <a href="/article-modification/{{_id}}"><button class="btn btn-secondary me-md-2"
+                                    type="button">Modifier</button></a>
                             <button class="btn btn-danger" type="button" data-bs-toggle="modal"
                                 data-bs-target="#Modal{{_id}}">Supprimé</button>
                         </div>
@@ -43,6 +47,8 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                 <form action="/effacer-article/{{_id}}" method="post"
                                     enctype="application/x-www-form-urlencoded">
+                                    <input name="csrftoken" type="hidden" value="{{csrf}}">
+
                                     <button type="submit" class="btn btn-danger">Supprimer</button>
                                 </form>
 

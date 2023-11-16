@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-8 mx-auto mb-5">
+        <div class="col-md-8 mx-auto mt-5">
             {{#if article}}
             <h1>Modifier un article</h1>
             {{else}}
@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-8 mx-auto mt-3">
             {{#if article}}
             <form action="/article-modification/{{article._id}}" method="post" enctype="application/x-www-form-urlencoded">
                 {{else}}

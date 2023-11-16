@@ -2,7 +2,7 @@ const userModel = require("../models/userModel")
 
 module.exports = {
     get: async (req, res) => {
-        res.render('register')
+        res.render('register',  {active: {register: true}})
     },
     post: (req, res) => {
         console.log(req.body);
@@ -17,12 +17,10 @@ module.exports = {
         res.redirect('/')
     },
     getConnect: (req, res) => {
-        res.render('connect')
+        res.render('connect',  {active: {connexion: true}})
     },
     postConnect: async (req, res) => {
-        console.log(req.body);
         const user = await userModel.findOne({ email: req.body.email }).lean()
-        console.log(user);
         if (!user) {
             return res.redirect('/inscription')
         } else {

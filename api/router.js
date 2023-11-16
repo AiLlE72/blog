@@ -1,5 +1,5 @@
 const express = require('express')
-const {  check } = require('express-validator');
+const { check } = require('express-validator');
 
 const router = express.Router()
 
@@ -8,54 +8,95 @@ const contactController = require('./controllers/contactController')
 const articleController = require('./controllers/articleController')
 const categorycontroller = require('./controllers/categorycontroller');
 const userController = require('./controllers/userController');
+const commentController = require('./controllers/commentController');
 
-const log = require('./middlewares/test')
+
+const csrf = require('./middlewares/csrf')
+
 
 router.route('/')
     .get(homeController.get)
 
+/************************************
+ *                                  *
+ *      Gestion des contacts        *
+ *                                  *
+ ************************************/
+
 router.route('/contact')
     .get(contactController.get)
-    .post([check("email").notEmpty().withMessage("votre formulaire est vide")
-        .isEmail().withMessage('votre formulaire n\'est pas un email').escape(),
-        check('content').notEmpty().withMessage("votre contenu est vide").escape()],
+    .post([
+        check("email").exists().notEmpty().withMessage("votre formulaire est vide").isEmail().withMessage('votre formulaire n\'est pas un email').escape().trim(),
+        check('content').exists().notEmpty().withMessage("votre contenu est vide").escape().trim()],
         contactController.post)
+
+
+/************************************
+ *                                  *
+ *      Gestion des articles        *
+ *                                  *
+ ************************************/
 
 router.route('/formulaire-article')
     .get(articleController.getForm)
-    .post(articleController.postForm)
+    .post(csrf,[
+        check('title').exists().notEmpty().escape().trim()
+    ], articleController.postForm)
 
 router.route('/liste-articles')
     .get(articleController.getList)
 
 router.route('/effacer-article/:_id')
-    .post(articleController.delete)
+    .post(csrf, articleController.delete)
 
 router.route('/article-modification/:_id')
     .get(articleController.getUpdate)
-    .post(articleController.postUpdate)
+    .post(csrf, articleController.postUpdate)
 
+router.route('/article/:_id')
+    .get(articleController.getArticle)
+
+
+/************************************
+ *                                  *
+ *      Gestion des categories      *
+ *                                  *
+ ************************************/
 router.route('/categories')
     .get(categorycontroller.get)
-    .post(categorycontroller.post)
+    .post(csrf, categorycontroller.post)
 
 router.route('/categories/effacer/:_id')
-    .post(categorycontroller.delete)
+    .post(csrf, categorycontroller.delete)
 
 router.route('/categories/modifier/:_id')
-    .get( categorycontroller.getUpdate)
-    .post(categorycontroller.postUpdate)
+    .get(categorycontroller.getUpdate)
+    .post(csrf, categorycontroller.postUpdate)
+
+/************************************
+ *                                  *
+ *      Gestion des commentaires    *
+ *                                  *
+ ************************************/
+router.route('/comment/:_id')
+    .post(csrf, commentController.post)
+
+/************************************
+ *                                  *
+ *      Gestion des Utilisateurs    *
+ *                                  *
+ ************************************/
 
 router.route('/inscription')
-    .get( userController.get)
-    .post(userController.post)
+    .get(userController.get)
+    .post(csrf, userController.post)
 
 router.route('/connexion')
-    .get( userController.getConnect)
+    .get(userController.getConnect)
     .post(userController.postConnect)
 
 router.route('/deconnexion')
-    .post(userController.deco)
-    
+    .post(csrf, userController.deco)
+
 
 module.exports = router

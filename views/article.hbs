@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto mt-5">
+            <h1>{{article.title}}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 mx-auto mt-3">
+            <p>{{article.content}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 mx-auto mt-3">
+            <small class="text-body-secondary">
+                Article publié le {{article.createdAt}} et écrit par
+                <strong>{{article.author}}</strong>
+            </small>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 mx-auto mt-3">
+            <h3>Les commentaires des lecteurs :</h3>
+        </div>
+    </div>
+
+    {{#if email}}
+    <div class="row">
+        <div class="col-md-8 mx-auto mt-3">
+            <form action="/comment/{{article._id}}" method="post" enctype="application/x-www-form-urlencoded">
+                <input name="csrf" type="hidden" value="{{csrf}}">
+
+                <div class="mb-3">
+                    <label for="#emailInput" class="form-label">Votre email</label>
+                    <input name="email" type="email" class="form-control" id="emailInput" placeholder="{{user.email}}">
+                </div>
+                <div class="mb-3">
+                    <label for="#comment" class="form-label">Votre commentaire</label>
+                    <textarea name="comment" class="form-control" id="comment" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <button type="submit">Envoyer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {{/if}}
+    <div class="row">
+        {{#each comments}}
+        <div class="col-md-8  p-3 mx-auto mt-3 border border-success-subtle border-opacity-25 rounded">
+            <p>{{this.content}}</p>
+            <small>Commenté par {{this.author.email}} le {{this.createdAt}}</small>
+        </div>
+        {{/each}}
+    </div>
+</div>
