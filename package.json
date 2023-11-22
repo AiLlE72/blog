@@ -18,5 +18,8 @@
     "handlebars.moment": "^1.0.4",
     "helmet": "^7.0.0",
     "mongoose": "^7.6.3"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0"
   }
 }
